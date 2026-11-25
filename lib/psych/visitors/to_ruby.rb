@@ -386,7 +386,15 @@ module Psych
       end
 
       def revive_hash hash, o, tagged= false
-        o.children.each_slice(2) { |k,v|
+        children = o.children
+        i = 0
+        len = children.length
+
+        while i < len
+          k = children[i]
+          v = children[i + 1]
+          i += 2
+
           key = accept(k)
           val = accept(v)
 
@@ -420,8 +428,7 @@ module Psych
 
             hash[key] = val
           end
-
-        }
+        end
         hash
       end
 
